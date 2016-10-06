@@ -1,4 +1,61 @@
-test
+利用map()函数，把用户输入的不规范的英文名字，变为首字母大写，其他小写的规范名字。输入：['adam', 'LISA', 'barT']，输出：['Adam', 'Lisa', 'Bart']：
+# -*- coding: utf-8 -*-
+
+def normalize(name):
+    return name.capitalize()
+    L1 = ['adam', 'LISA', 'barT']
+    L2 = list(map(normalize, L1))
+    print (L2)
+# 测试:
+L1 = ['adam', 'LISA', 'barT']
+L2 = list(map(normalize, L1))
+print(L2)
+
+#####
+Python提供的sum()函数可以接受一个list并求和，请编写一个prod()函数，可以接受一个list并利用reduce()求积：
+
+# -*- coding: utf-8 -*-
+
+from functools import reduce
+
+def prod(L):
+
+    # 求列表list的积, 并返回
+    return reduce(lambda x, y: x * y, L)
+    # 输出函数调用结果
+
+print('3 * 5 * 7 * 9 =', prod([3, 5, 7, 9]))
+
+###
+利用map和reduce编写一个str2float函数，把字符串'123.456'转换成浮点数123.456：
+
+# -*- coding: utf-8 -*-
+
+from functools import reduce
+
+def str2float(s):
+
+ # 通过 ‘.’ 分割数字字符串，赋值对应的 ‘.’ 左右字符串变量
+    l_s_int, r_s_float = s.split('.')
+    # 字符串 ‘.’ 右侧长度
+    r_s_len = len(r_s_float)
+
+    # 字符转数字函数
+    def char2int(s):
+        return {'0': 0, '1': 1, '2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7, '8': 8, '9': 9}[s]
+
+    # 左侧-整数字符串转换
+    l_transfer = reduce(lambda x, y: x * 10 + y, map(char2int, l_s_int))
+    # 右侧-整数字符串转换
+    r_transfer = reduce(lambda x, y: x * 10 + y, map(char2int, r_s_float))
+
+    # 注意：
+    # (1)、r_transfer / 10 ** r_s_len:    expression python2 return 0
+    # (1)、r_transfer / 10 ** r_s_len:    expression python3 return 0.456
+    return l_transfer + r_transfer / 10 ** r_s_len
 
 
-love git
+
+print(str2float('123.456'))
+
+print('str2float(\'123.456\') =', str2float('123.456'))
